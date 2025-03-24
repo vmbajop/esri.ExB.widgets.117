@@ -1,4 +1,4 @@
 export default {
-    _widgetLabel: 'Pruebas Sencillas',
+    _widgetLabel: 'MCFG',
   }
   
