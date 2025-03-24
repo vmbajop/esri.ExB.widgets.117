@@ -11,6 +11,13 @@ const SelectLayers = ({ jimuMapView, onChange }) => {
         const mapLayers = jimuMapView.view.map.layers.toArray();
         setLayers(mapLayers);
     };
+    
+    const handleLayerChange = (layerId) => {
+        const selectedLayer = layers.find((layer) => layer.id === layerId);
+        if (onChange) {
+            onChange(selectedLayer);
+        }
+    };
 
     useEffect(() => {
         if (!jimuMapView) return;
@@ -31,7 +38,8 @@ const SelectLayers = ({ jimuMapView, onChange }) => {
     }, [jimuMapView]);
 
     return (
-        <select onChange={(e) => onChange && onChange(e.target.value)}>
+        //<select onChange={(e) => onChange && onChange(e.target.value)}>
+        <select onChange={(e) => handleLayerChange(e.target.value)}>
             {layers.map((layer, index) => (
                 <option key={index} value={layer.id}>
                     {layer.title + "-" + layer.id || `Layer ${index + 1}`}
