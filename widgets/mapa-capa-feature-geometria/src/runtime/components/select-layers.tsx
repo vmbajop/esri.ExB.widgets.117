@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const SelectLayers = ({ jimuMapView }) => {
+const SelectLayers = ({ jimuMapView, onChange }) => {
     
     /** variable reactiva para controlar las capas que hay en el mapa
      *  y función que modifica su contenido
@@ -31,7 +31,7 @@ const SelectLayers = ({ jimuMapView }) => {
     }, [jimuMapView]);
 
     return (
-        <select>
+        <select onChange={(e) => onChange && onChange(e.target.value)}>
             {layers.map((layer, index) => (
                 <option key={index} value={layer.id}>
                     {layer.title + "-" + layer.id || `Layer ${index + 1}`}
