@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { JimuMapViewComponent, JimuMapView } from 'jimu-arcgis';
+import SelectLayers from './components/select-layers';
 
 interface WidgetProps {
     useMapWidgetIds?: string[];
@@ -27,6 +28,7 @@ const Widget: React.FC<WidgetProps> = (props) => {
                 useMapWidgetId={props.useMapWidgetIds?.[0]} 
                 onActiveViewChange={handleActiveViewChange} 
             />
+            <SelectLayers jimuMapView={jimuMapView}></SelectLayers>
         </div>
     );
 };
