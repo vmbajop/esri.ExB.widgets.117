@@ -12,7 +12,7 @@ const SelectLayers = ({ jimuMapView, onChange }) => {
         setLayers(mapLayers);
     };
     
-    const handleLayerChange = (layerId) => {
+    const handleLayerChange = (layerId: string) => {
         const selectedLayer = layers.find((layer) => layer.id === layerId);
         if (onChange) {
             onChange(selectedLayer);
