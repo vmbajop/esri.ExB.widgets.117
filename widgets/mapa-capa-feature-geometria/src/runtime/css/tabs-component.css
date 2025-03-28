@@ -1,0 +1,26 @@
+/* Estilo para mostrar los botones como pestañas */
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-size: 16px;
+}
+
+.tab-button.active {
+    border-bottom: 2px solid #007ac2;
+    font-weight: bold;
+}
+
+.tab-content {
+    padding: 10px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+}

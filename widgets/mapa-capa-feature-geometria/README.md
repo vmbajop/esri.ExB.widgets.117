@@ -1,5 +1,5 @@
 
-# Componente SelectLayer
+# Widget Mapa-Capa_Feature-Geometrias
 
 ## Componente SelectLayers
 
@@ -56,9 +56,9 @@ trabaja con la propiedad reactiva
  
 Establece la propiedad reactiva `layers`, que sencillamanete es un array, con las capas del mapa. Cada vez que pasa por el emétodo, vuelve a leer todas las capas del mapa y sobre escribe los valores introducidos con los nuevos detectados, de tal forma que si se añaden o se quitan capas la lista queda automáticamente modificada.
 
-# El funcionamiento del compoente
+## El funcionamiento del componente
 
-## Selección y devolución de una Layer
+**Selección y devolución de una Layer**
 
 El componente va a devolver un objeto que va a resultar ser una `Layer`
 
@@ -152,6 +152,114 @@ Esto permite que el componente padre (como `Widget.tsx`) maneje el cambio de sel
 
 
 # Implementar pestañas
+
+## Componente Tabs
+
+### Componente
+
+1. Props del componente:
+
+    - tabs: Un array de objetos, donde cada objeto representa una pestaña con un título (title) y contenido (content).
+    
+    - activeTab: La pestaña actualmente activa.
+
+    - onTabChange: Una función que se llama cuando el usuario selecciona una pestaña.
+2. Botones de pestañas:
+
+    - Se generan dinámicamente a partir del array tabs.
+    - El botón correspondiente a la pestaña activa tiene un estilo diferente (por ejemplo, texto en negrita).
+
+3. Contenido dinámico:
+
+    - Solo se muestra el contenido de la pestaña activa (activeTab.content).
+
+
+### Ejemplo de uso:
+
+En un componente padre, puedes usar el componente Tabs así:
+
+```jsx
+    import React, { useState } from 'react';
+    import Tabs from './Tabs';
+
+    const App = () => {
+        const [activeTab, setActiveTab] = useState(null);
+
+        const tabs = [
+            { title: 'Pestaña 1', content: 'Contenido de la Pestaña 1' },
+            { title: 'Pestaña 2', content: 'Contenido de la Pestaña 2' },
+        ];
+
+        return (
+            <Tabs
+                tabs={tabs}
+                activeTab={activeTab}
+                onTabChange={(tab) => setActiveTab(tab)}
+            />
+        );
+    };
+
+    export default App;
+```
+
+### Definición de tipos para forzar el uso
+
+Inicalmente esto era así:
+    
+```jsx
+    import React from 'react';
+
+    const Tabs = ({ tabs, activeTab, onTabChange }) => {
+        return (
+            <div>
+                {/* Controles de las pestañas */}
+                <div className="tabs">
+                    {tabs.map((tab, index) => (
+                        <button
+                            key={index}
+                            onClick={() => onTabChange(tab)}>
+                            {tab.title}
+                        </button>
+                    ))}
+                </div>
+
+                {/* Contenido de la pestaña activa */}
+                <div className="tab-content">
+                    {activeTab && <div>{activeTab.content}</div>}
+                </div>
+            </div>
+        );
+    };
+
+    export default Tabs;
+```
+
+Pero aquí habría que señalar que `tabs` es un `[]`, poniendo `const Tabs = ({ tabs:[], activeTab, onTabChange }) => {`, pero no siquiera así se está forzando una estructura dada.
+
+Para lograrlo se hace lo siguiente:
+
+Se define una interfaz que fuerza la estructura de datos del un Tab: ha de ser un objeto con las dos propiedades que se indican
+
+```jsx
+    interface Tab {
+        title: string;
+        content: string;
+    }
+```
+
+Además, se crea una interfaz con los `Props`que se van a pasar a Tabs y qué espera recibir en ese `Props`
+
+```jsx
+    interface TabsProps {
+        tabs: Tab[];
+        activeTab: Tab | null;
+        onTabChange: (tab: Tab) => void;
+    }
+```
+
+Así se fuerza la forma en la que el componente padre (`Widget.tsx`) tiene que llamar al componente.
+
+## Maneras de definir un Componente Tabs
 
 ### CalciteTabs
 

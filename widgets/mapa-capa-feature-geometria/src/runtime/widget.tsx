@@ -3,6 +3,7 @@ import { JimuMapViewComponent, JimuMapView } from 'jimu-arcgis';
 import Layer from "@arcgis/core/layers/Layer.js";
 import SelectLayers from './components/select-layers';
 import SelectFields from './components/select-fields';
+import Tabs from './components/tabs-component';
 
 interface WidgetProps {
     useMapWidgetIds?: string[];
@@ -39,15 +40,18 @@ const Widget: React.FC<WidgetProps> = (props) => {
       }
       }, [layerSeleccionada]);
 
-
     return (
         <div>
             <JimuMapViewComponent 
                 useMapWidgetId={props.useMapWidgetIds?.[0]} 
                 onActiveViewChange={handleActiveViewChange} 
             />
-            <SelectLayers jimuMapView={jimuMapView} onChange={(optionSelected: Layer) => setLayerSeleccionada(optionSelected)}></SelectLayers>
-            <SelectFields layer={layerSeleccionada} onFieldSelect={function (fieldName: string): void { throw new Error('Function not implemented.');} }></SelectFields>
+            
+            <Tabs tabs={tabs} activeTab={tabs[0]} onTabChange={(tab) => setActiveTab(tab)}>
+            </Tabs>
+
+            {/* <SelectLayers jimuMapView={jimuMapView} onChange={(optionSelected: Layer) => setLayerSeleccionada(optionSelected)}></SelectLayers>
+            <SelectFields layer={layerSeleccionada} onFieldSelect={function (fieldName: string): void { throw new Error('Function not implemented.');} }></SelectFields> */}
         </div>
     );
 };
