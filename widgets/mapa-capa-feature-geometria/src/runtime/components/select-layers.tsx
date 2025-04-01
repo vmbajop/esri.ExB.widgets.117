@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const SelectLayers = ({ jimuMapView, onChange }) => {
     
-    /** variable reactiva para controlar las capas que hay en el mapa
-     *  y función que modifica su contenido
-     */
+    /** variable reactiva para controlar las capas que hay en el mapa*/
     const [layers, setLayers] = useState([]);
 
     const updateLayersInMap = () => {
@@ -12,6 +10,7 @@ const SelectLayers = ({ jimuMapView, onChange }) => {
         setLayers(mapLayers);
     };
     
+    /** Función para controlar el cambio de Layer en el Select */
     const handleLayerChange = (layerId: string) => {
         const selectedLayer = layers.find((layer) => layer.id === layerId);
         if (onChange) {
@@ -38,10 +37,9 @@ const SelectLayers = ({ jimuMapView, onChange }) => {
     }, [jimuMapView]);
 
     return (
-        //<select onChange={(e) => onChange && onChange(e.target.value)}>
         <select onChange={(e) => handleLayerChange(e.target.value)}>
             {layers.map((layer, index) => (
-                <option key={index} value={layer.id}>
+                <option key={index} value={layer.id}>                      {/** Se envía layer.id porque handleLayerChange espera un string */}
                     {layer.title + "-" + layer.id || `Layer ${index + 1}`}
                 </option>
             ))}

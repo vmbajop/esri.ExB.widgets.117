@@ -12,7 +12,7 @@ const SelectFields: React.FC<SelectFieldsProps> = ({ layer, onFieldSelect }) => 
     useEffect(() => {
         if (layer && 'fields' in layer) {
             // @ts-ignore: Ensure the layer has fields property
-            setFields(layer.fields.map((field: any) => field.name));
+            setFields(layer.fields? layer.fields.map((field: any) => field.name) : []);
         }
     }, [layer]);
 

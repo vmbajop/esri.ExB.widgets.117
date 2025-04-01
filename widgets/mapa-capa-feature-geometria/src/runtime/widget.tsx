@@ -3,7 +3,7 @@ import { JimuMapViewComponent, JimuMapView } from 'jimu-arcgis';
 import Layer from "@arcgis/core/layers/Layer.js";
 import SelectLayers from './components/select-layers';
 import SelectFields from './components/select-fields';
-import Tabs from './components/tabs-component';
+import TabsComponent from './components/tabs-component';
 
 interface WidgetProps {
     useMapWidgetIds?: string[];
@@ -40,18 +40,36 @@ const Widget: React.FC<WidgetProps> = (props) => {
       }
       }, [layerSeleccionada]);
 
+      const tabs = [
+        {
+          label: "Seleccionar Capas",
+          content: (
+            <div>
+              <SelectLayers jimuMapView={jimuMapView} onChange={(optionSelected: Layer) => setLayerSeleccionada(optionSelected)}></SelectLayers>,
+              <SelectFields layer={layerSeleccionada} onFieldSelect={function (fieldName: string): void { throw new Error('Function not implemented.');} }></SelectFields>
+            </div>
+          )
+        },
+        {
+          label: "Hola Mundo",
+          content: (
+        <div>
+          <iframe 
+            src="https://developers.arcgis.com/experience-builder/guide/getting-started-widget/" 
+            style={{ width: '100%', height: '500px', border: 'none' }} 
+            title="ExB">
+          </iframe>
+        </div>
+          )
+        }
+      ];
     return (
         <div>
             <JimuMapViewComponent 
                 useMapWidgetId={props.useMapWidgetIds?.[0]} 
                 onActiveViewChange={handleActiveViewChange} 
             />
-            
-            <Tabs tabs={tabs} activeTab={tabs[0]} onTabChange={(tab) => setActiveTab(tab)}>
-            </Tabs>
-
-            {/* <SelectLayers jimuMapView={jimuMapView} onChange={(optionSelected: Layer) => setLayerSeleccionada(optionSelected)}></SelectLayers>
-            <SelectFields layer={layerSeleccionada} onFieldSelect={function (fieldName: string): void { throw new Error('Function not implemented.');} }></SelectFields> */}
+            <TabsComponent tabs={tabs}></TabsComponent>
         </div>
     );
 };
