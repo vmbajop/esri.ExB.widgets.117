@@ -1,8 +1,7 @@
 import { type ImmutableObject } from 'seamless-immutable'
 
 export interface Config {
-  exampleConfigProperty: string;
-  urlDocumnetoAyuda: string;
+  urlDocumentoAyuda: string;
   tituloDocumentoAyuda: string;
 }
 

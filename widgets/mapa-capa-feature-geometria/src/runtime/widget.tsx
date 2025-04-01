@@ -4,9 +4,11 @@ import Layer from "@arcgis/core/layers/Layer.js";
 import SelectLayers from './components/select-layers';
 import SelectFields from './components/select-fields';
 import TabsComponent from './components/tabs-component';
+import { IMConfig } from '../config';
 
 interface WidgetProps {
     useMapWidgetIds?: string[];
+    config: IMConfig;
 }
 
 const Widget: React.FC<WidgetProps> = (props) => {
@@ -42,7 +44,7 @@ const Widget: React.FC<WidgetProps> = (props) => {
 
       const tabs = [
         {
-          label: "Seleccionar Capas",
+          label: "Widget MCFG",
           content: (
             <div>
               <SelectLayers jimuMapView={jimuMapView} onChange={(optionSelected: Layer) => setLayerSeleccionada(optionSelected)}></SelectLayers>,
@@ -51,11 +53,11 @@ const Widget: React.FC<WidgetProps> = (props) => {
           )
         },
         {
-          label: "Hola Mundo",
+          label: "Ayuda",
           content: (
         <div>
           <iframe 
-            src="https://developers.arcgis.com/experience-builder/guide/getting-started-widget/" 
+            src= {props.config.urlDocumentoAyuda || "https://www.google.es"}  
             style={{ width: '100%', height: '500px', border: 'none' }} 
             title="ExB">
           </iframe>
