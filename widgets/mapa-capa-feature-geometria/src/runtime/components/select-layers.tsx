@@ -5,6 +5,7 @@ const SelectLayers = ({ jimuMapView, onChange }) => {
     /** variable reactiva para controlar las capas que hay en el mapa*/
     const [layers, setLayers] = useState([]);
 
+    /** Función para controlar el valor de la propiedad reactiva layers */
     const updateLayersInMap = () => {
         const mapLayers = jimuMapView.view.map.layers.toArray();
         setLayers(mapLayers);
@@ -18,18 +19,17 @@ const SelectLayers = ({ jimuMapView, onChange }) => {
         }
     };
 
+    /** En este effect se controla el montaje de JimuMapView (ver abajo []) */
     useEffect(() => {
         if (!jimuMapView) return;
 
-        /** nada más montarse el JimuMapView se ejecuta useEffect (ver [] de UseEffect abajo)
-         *  y lo primero que hace es establecer el control de capas cargadas de este componente
-         */
+        /** Lo primero que hace es establecer el control de capas cargadas en el mapa actualizando la propiedad reactiva Layers: UseEffect --> updateLayersInMap --> setLayers */
         updateLayersInMap();
 
-        /** Listener para determinar si se ha cargado o quitado una capa y actualizar el array de capas */
+        /** en el montaje se crea este Listener para determinar si se ha cargado o quitado una capa y actualizar el array de capas (propiedad reactiva Layers) */
         const handleLayerChanged = jimuMapView.view.map.layers.on('change', updateLayersInMap);   
 
-        // Al desmontar el componenete JimuMapView se Limpia el listener
+        // Al desmontar el componenete JimuMapView, se Limpia el Listener
         return () => {
             handleLayerChanged.remove();
         };
@@ -39,7 +39,7 @@ const SelectLayers = ({ jimuMapView, onChange }) => {
     return (
         <select onChange={(e) => handleLayerChange(e.target.value)}>
             {layers.map((layer, index) => (
-                <option key={index} value={layer.id}>                      {/** Se envía layer.id porque handleLayerChange espera un string */}
+                <option key={index} value={layer.id}>                      {/** Se envía layer.id porque handleLayerChange espera un string, por eso el value = string en vez de a esri.Layers.Layer */}
                     {layer.title + "-" + layer.id || `Layer ${index + 1}`}
                 </option>
             ))}

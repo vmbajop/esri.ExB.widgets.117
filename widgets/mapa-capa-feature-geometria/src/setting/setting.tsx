@@ -6,7 +6,7 @@ import { TextInput } from 'jimu-ui';
 //const Setting: React.FC<AllWidgetSettingProps<any>> = (props) => {
 const Setting = (props: AllWidgetSettingProps<any>) => {
   
-  // Manejar la selección del mapa
+  // Gestionar la selección del mapa
   const onMapWidgetSelected = (useMapWidgetIds: string[]) => {
     props.onSettingChange({
       id: props.id,
@@ -14,7 +14,7 @@ const Setting = (props: AllWidgetSettingProps<any>) => {
     });
   };
 
-  // Manejar cambios en la URL del documento de ayuda
+  // Gestionar cambios en la URL del documento de ayuda
   const handleUrlChange = (value: string) => {
     props.onSettingChange({
       id: props.id,
@@ -22,7 +22,7 @@ const Setting = (props: AllWidgetSettingProps<any>) => {
     });
   };
 
-  // Manejar cambios en el título del documento de ayuda
+  // Gestionar cambios en el título del documento de ayuda
   const handleTitleChange = (value: string) => {
     props.onSettingChange({
       id: props.id,

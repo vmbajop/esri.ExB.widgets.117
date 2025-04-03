@@ -1,7 +1,7 @@
 
 # Widget Mapa-Capa_Feature-Geometrias
 
-## Componente SelectLayers
+## Componente <u>SelectLayers</u>
 
 Se trata de un componente, desarrollado en forma Funcional (en vez de ser de clase) que especializa un Select para mostrar las capas de un mapa.
 
@@ -56,7 +56,7 @@ trabaja con la propiedad reactiva
  
 Establece la propiedad reactiva `layers`, que sencillamanete es un array, con las capas del mapa. Cada vez que pasa por el emétodo, vuelve a leer todas las capas del mapa y sobre escribe los valores introducidos con los nuevos detectados, de tal forma que si se añaden o se quitan capas la lista queda automáticamente modificada.
 
-## El funcionamiento del componente
+### El funcionamiento del componente
 
 **Selección y devolución de una Layer**
 
@@ -147,13 +147,18 @@ Cuando el usuario selecciona una nueva opción en el `<select>`, esta línea:
 
 Esto permite que el componente padre (como `Widget.tsx`) maneje el cambio de selección en el `<select>`. Por ejemplo, el componente padre podría actualizar un estado o realizar alguna acción basada en la capa seleccionada.
 
+---
+**----------------------------------------------------------------------------------------------**
+
+**----------------------------------------------------------------------------------------------**
+
+**----------------------------------------------------------------------------------------------**
 
 ---
 
-
 # Implementar pestañas
 
-## Componente Tabs
+## Componente <u>Tabs</u>
 
 ### Componente
 
@@ -259,7 +264,7 @@ Además, se crea una interfaz con los `Props`que se van a pasar a Tabs y qué es
 
 Así se fuerza la forma en la que el componente padre (`Widget.tsx`) tiene que llamar al componente.
 
-## Maneras de definir un Componente Tabs
+# <u>Maneras de definir un Componente Tabs</u>
 
 ### CalciteTabs
 
@@ -395,3 +400,120 @@ con el CSS
         </div>
     );
 ```
+
+---
+**----------------------------------------------------------------------------------------------**
+
+**----------------------------------------------------------------------------------------------**
+
+**----------------------------------------------------------------------------------------------**
+
+---
+
+# Implementar la configuración del Widget en la interfaz de ExB
+
+## Archivos involucrados:
+
+1. carpeta_del_widget/config.json
+2. carpeta_del_widget/src/config.ts
+3. carpeta_del_widget/src/setting/setting.tsx
+
+### 1.  config.json
+
+- Contiene los elementos configurables para si se quiere tomar su valor por defecto
+- Tambien contiene valores constantes que pueden ser tomados en tiempo de ejecución en el widget
+
+```json
+    {
+        "urlDocumentoAyuda": "https://developers.arcgis.com/experience-builder/guide/getting-started-widget/",
+        "tituloDocumentoAyuda": "ExB"
+    }
+```
+
+### 2. config.ts
+
+- Expone la `interface` de configuración `IMConfig`
+- Los elementos que hay aquí no tienen porqué estar en el archivo anterior `config.json`. Los de allí sólo tienen como función establecer valores constantes quep pueden ser leídos con posterioridad. Por ejemplo, más adelante podrían usarse como valores  por defecto
+
+```ts
+    import { type ImmutableObject } from 'seamless-immutable'
+
+    export interface Config {
+    urlDocumentoAyuda: string;
+    tituloDocumentoAyuda: string;
+    }
+
+    export type IMConfig = ImmutableObject<Config>
+```
+
+### 3. setting.tsx
+
+Aquí es donde se controla como los parámetros de configuración se exponente la UI de ExB para poderlos configurar allí.
+
+En general, habrá que revisar la API para ver que ofrece `jimu-ui`, como puede verse aquí:
+
+```tsx
+    import { MapWidgetSelector } from 'jimu-ui/advanced/setting-components';
+    import { TextInput } from 'jimu-ui';    
+```
+
+que nos permitirán tratar con inputs para meter texto libre e indicar cual es el mapa que usar´ça el widget para trabajar.
+
+Habrá que traer las props de configuración
+```tsx
+    const Setting = (props: AllWidgetSettingProps<any>) => { 
+```
+
+y para luego jugar con los parámetros que necesitemos, generando funciones que gestionen los cambios y estabezcan los parámetros introducidos, en este caso un mapa:
+
+```tsx
+  // Gestionar la selección del mapa
+  const onMapWidgetSelected = (useMapWidgetIds: string[]) => {
+    props.onSettingChange({
+      id: props.id,
+      useMapWidgetIds: useMapWidgetIds
+    });
+  };
+```
+
+un input de texto libre:
+
+```tsx
+     // Gestionar cambios en la URL del documento de ayuda
+    const handleUrlChange = (value: string) => {
+        props.onSettingChange({
+        id: props.id,
+        config: props.config.set('urlDocumentoAyuda', value),
+        });
+    };
+```
+
+y lo que hagan falta.
+
+Se expone el componente para que actúe con la UI de ExB:
+
+```tsx
+    return (
+            <div className="m-2">
+                {/* Selector de mapa */}
+                <MapWidgetSelector
+                    onSelect={onMapWidgetSelected}
+                    useMapWidgetIds={props.useMapWidgetIds}
+                />
+
+                {/* Configuración adicional */}
+                <div className="mt-3">
+                    <label>URL del Documento de Ayuda:</label>
+                    <TextInput
+                    className="w-100"
+                    defaultValue={props.config.urlDocumentoAyuda}
+                    onChange={(e) => handleUrlChange(e.target.value)}
+                    />
+                </div>
+                ...
+            </div>
+        );
+    };
+```
+
+Se puede observar que el `map` y el `input` tienen dos métodos para gestionar sus cambios que son los que llaman a las funciones de arriba

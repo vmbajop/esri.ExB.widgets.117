@@ -1,26 +1,29 @@
-/* Estilo para mostrar los botones como pestañas */
-.tabs {
-    display: flex;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 10px;
+.tabs-component-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.unac-tab-container{
+  display: flex;
+  border-bottom: 1px solid #ccc;
 }
 
-.tab-button {
-    padding: 10px 20px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    border-bottom: 2px solid transparent;
-    font-size: 16px;
+.button-tab{
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+}
+.button-tab:hover{
+    background-color: #ddd;
+}
+.button-tab.active{
+  border-bottom: 2px solid blue;
+  background-color: #f0f0f0;
 }
 
-.tab-button.active {
-    border-bottom: 2px solid #007ac2;
-    font-weight: bold;
-}
-
-.tab-content {
-    padding: 10px;
-    background: #f9f9f9;
-    border: 1px solid #ccc;
+.ac-tab-container{
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
 }
