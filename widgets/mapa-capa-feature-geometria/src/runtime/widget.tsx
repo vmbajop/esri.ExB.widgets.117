@@ -56,7 +56,7 @@ const Widget: React.FC<WidgetProps> = (props) => {
       label: "Widget MCFG",
       content: (
         <div>
-          <SelectLayers jimuMapView={jimuMapView} onChange={(optionSelected: Layer) => setLayerSeleccionada(optionSelected)}></SelectLayers>,
+          <SelectLayers jimuMapView={jimuMapView} onChange={(optionSelected: Layer) => setLayerSeleccionada(optionSelected)}></SelectLayers>
           <SelectFields layer={layerSeleccionada} onFieldSelect={function (fieldName: string): void { throw new Error('Function not implemented.');} }></SelectFields>
         </div>
       )

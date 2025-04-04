@@ -37,13 +37,17 @@ const SelectLayers = ({ jimuMapView, onChange }) => {
     }, [jimuMapView]);
 
     return (
-        <select onChange={(e) => handleLayerChange(e.target.value)}>
-            {layers.map((layer, index) => (
-                <option key={index} value={layer.id}>                      {/** Se envía layer.id porque handleLayerChange espera un string, por eso el value = string en vez de a esri.Layers.Layer */}
-                    {layer.title + "-" + layer.id || `Layer ${index + 1}`}
-                </option>
-            ))}
-        </select>
+        <div>
+            <label htmlFor="layer-select">Select a Layer: </label>
+            <select id='layer-select' onChange={(e) => handleLayerChange(e.target.value)}>
+                <option value="">-- Select a Layer --</option> {/** Opción por defecto */}
+                {layers.map((layer, index) => (
+                    <option key={index} value={layer.id}>                      {/** Se envía layer.id porque handleLayerChange espera un string, por eso el value = string en vez de a esri.Layers.Layer */}
+                        {layer.title + "-" + layer.id || `Layer ${index + 1}`}
+                    </option>
+                ))}
+            </select>
+        </div>
     );
 };
 
