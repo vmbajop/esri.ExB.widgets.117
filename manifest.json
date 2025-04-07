@@ -1,7 +1,7 @@
 {
-  "name": "ExB-widgets-personales",
+  "name": "ExB-widgets-pruebas",
   "type": "exb-web-extension-repo",
-  "description": "Repositorio personalizado",
+  "description": "Repositorio para realizar pruebas y experimentos",
   "copyright": "",
   "license": "http://www.apache.org/licenses/LICENSE-2.0"
 }
